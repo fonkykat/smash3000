@@ -6,7 +6,9 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,20 +31,31 @@ public class ChapterController extends RestControllerBase
 	@Autowired
 	ChapterRepository chapterRepo;
 
-	@RequestMapping(path = "/{number}", method = RequestMethod.PUT)
-	public Chapter incrChapter(@PathVariable("number") Integer number) throws GorgePasContentException
+	@RequestMapping(path = "", method = RequestMethod.POST)
+	public Chapter newChapter(@RequestBody Chapter chapter) throws GorgePasContentException
 	{
-		List<Chapter> chaps = chapterRepo.findAll();
-		Chapter chap = chaps.get(0);
-		chap.setNumber(number);
-		return chapterRepo.save(chap);
+		if(chapterRepo.existsByNumber(chapter.getNumber()))
+			throw new GorgePasContentException(HttpStatus.CONFLICT, "This chapter number is already assigned");
+		
+		return chapterRepo.save(chapter);
 	}
-
+	
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public Chapter getChap() throws GorgePasContentException
+	public List<Chapter> getAllChapters() throws GorgePasContentException{
+
+		return chapterRepo.findAll();
+		
+	}
+	
+	
+	@RequestMapping(path = "/{number}", method = RequestMethod.GET)
+	public Chapter getChapByNumber(@PathVariable("number") Integer number) throws GorgePasContentException
 	{
-		List<Chapter> chaps = chapterRepo.findAll();
-		return chaps.get(0);
+		Chapter chap = chapterRepo.findByNumber(number);
+		if(chap == null)
+			throw new GorgePasContentException(HttpStatus.NOT_FOUND, "This chapter does not exists");
+		
+		return chap;
 
 	}
 }

@@ -8,5 +8,7 @@ import com.gorge.smash.model.entity.Chapter;
 @RepositoryRestResource(collectionResourceRel = "chapter", path = "chapter")
 public interface ChapterRepository extends JpaRepository<Chapter, Long>
 {
-
+	public Chapter findByNumber(Integer number);
+	
+	public Boolean existsByNumber(Integer number);
 }

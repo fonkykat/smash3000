@@ -33,4 +33,11 @@ public class ButtonServiceImpl implements ButtonService
 		return;
 	}
 
+	@Override
+	public List<Button> getAll() throws GorgePasContentException
+	{
+		
+		return buttonRepo.findAll();
+	}
+
 }
