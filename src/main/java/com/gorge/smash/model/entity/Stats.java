@@ -11,6 +11,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "stats")
@@ -24,7 +26,7 @@ public class Stats {
 	@JoinTable(name="chapter_stats")
 	private Chapter chapter;
 	
-	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date savedOn;
 	
 	@Basic
