@@ -22,6 +22,7 @@ import com.gorge.smash.rest.exception.GorgePasContentException;
 import com.gorge.smash.rest.repository.ButtonPressRepository;
 import com.gorge.smash.rest.repository.ButtonRepository;
 import com.gorge.smash.service.interf.ButtonService;
+import com.gorge.smash.util.TempoError;
 
 import retrofit2.http.Body;
 
@@ -90,11 +91,43 @@ public class ButtonController extends RestControllerBase
 
 		return buttonPressRepo.save(press);
 	}
+	
+	@RequestMapping(path = "/{name}/tempo", method = RequestMethod.POST)
+	public ButtonPress addAdminTempo(@PathVariable("name") String name, @RequestBody ButtonPress press,
+			HttpServletRequest request) throws GorgePasContentException
+	{
+		if (!buttonRepo.existsByName(name))
+			throw new GorgePasContentException(HttpStatus.CONFLICT, "This button does not exist");
+
+		Timestamp ts = new Timestamp(press.getTimestamp());
+		Date date = new Date(ts.getTime());
+		press.setDate(date);
+		press.setName(name);
+
+		return buttonPressRepo.save(press);
+	}
+	
+	@RequestMapping(path = "/{name}/tempo/error", method = RequestMethod.GET)
+	public TempoError getPublicTempoError(@PathVariable("name") String name,
+			HttpServletRequest request) throws GorgePasContentException
+	{
+		return buttonService.getPublicError(name);
+	}
+	
+	
 
 	@RequestMapping(path = "/press/all", method = RequestMethod.GET)
 	public List<ButtonPress> getAllPress() throws GorgePasContentException
 	{
 		return buttonPressRepo.findAll();
+	}
+	
+	@RequestMapping(path = "/press/between/{start}/{end}", method = RequestMethod.GET)
+	public List<ButtonPress> getAllPressBetween(@PathVariable("start") Long start, @PathVariable("end") Long end) throws GorgePasContentException
+	{
+		if(start == null || end == null || start > end)
+			throw new GorgePasContentException(HttpStatus.BAD_REQUEST, "Start and End muist be non null Long with End being greater than Start");
+		return buttonPressRepo.findByTimestampBetween(start, end);
 	}
 
 	@RequestMapping(path = "/press/all", method = RequestMethod.DELETE)
