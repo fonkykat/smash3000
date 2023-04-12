@@ -68,6 +68,15 @@ public class CurrentController extends RestControllerBase {
 		throw new GorgePasContentException(HttpStatus.CONFLICT, "Requested Chapter does not exist");
 	}
 
+	@Operation(summary = "Request Unity to pass to next programmed Chapter")
+	@RequestMapping(path = "/next/{boolean}", method = RequestMethod.PUT)
+	public Current setNext(@PathVariable("boolean") Boolean next) throws GorgePasContentException {
+		Current current = currentRepo.getById(0);
+		current.setNext(next);
+		
+		return currentRepo.save(current);
+	}
+	
 	@Operation(summary = "Get current chapter number")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public Current getCurrent() throws GorgePasContentException {
