@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gorge.smash.model.entity.Button;
+import com.gorge.smash.model.entity.ButtonPress;
 import com.gorge.smash.rest.exception.GorgePasContentException;
+import com.gorge.smash.rest.repository.ButtonPressRepository;
 import com.gorge.smash.rest.repository.ButtonRepository;
 import com.gorge.smash.service.interf.ButtonService;
+import com.gorge.smash.util.TempoError;
 
 @Service
 public class ButtonServiceImpl implements ButtonService
@@ -19,6 +22,9 @@ public class ButtonServiceImpl implements ButtonService
 
 	@Autowired
 	ButtonRepository buttonRepo;
+	
+	@Autowired
+	ButtonPressRepository buttonPressRepo;
 
 	@Override
 	public void resetCounters() throws GorgePasContentException
@@ -39,5 +45,21 @@ public class ButtonServiceImpl implements ButtonService
 		
 		return buttonRepo.findAll();
 	}
+
+	@Override
+	public TempoError getPublicError(String name) throws GorgePasContentException {
+		
+		ButtonPress lastAdmin = buttonPressRepo.findFirstByNameOrderByTimestampDesc("admin");
+		
+		if(lastAdmin == null) return new TempoError((long)-1 , (double)-1, (double)-1);
+		
+		List<ButtonPress> crowdInput = buttonPressRepo.findByNameAndTimestampBetween(name, lastAdmin.getTimestamp() - 300, lastAdmin.getTimestamp() + 300);
+		Double crowdAverage = crowdInput.stream().mapToLong(x -> x.getTimestamp()).average().orElse(-1);
+		
+		if(crowdAverage == -1)
+			return new TempoError(lastAdmin.getTimestamp(), (double)-1, (double)-1);
+		
+		return new TempoError(lastAdmin.getTimestamp(), crowdAverage, crowdAverage - lastAdmin.getTimestamp());
+		}
 
 }

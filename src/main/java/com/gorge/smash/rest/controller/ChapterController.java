@@ -17,6 +17,8 @@ import com.gorge.smash.model.entity.Chapter;
 import com.gorge.smash.rest.exception.GorgePasContentException;
 import com.gorge.smash.rest.repository.ChapterRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/chapters")
 public class ChapterController extends RestControllerBase
@@ -31,6 +33,7 @@ public class ChapterController extends RestControllerBase
 	@Autowired
 	ChapterRepository chapterRepo;
 
+	@Operation(summary = "Add a new Chapter")
 	@RequestMapping(path = "", method = RequestMethod.POST)
 	public Chapter newChapter(@RequestBody Chapter chapter) throws GorgePasContentException
 	{
@@ -40,6 +43,7 @@ public class ChapterController extends RestControllerBase
 		return chapterRepo.save(chapter);
 	}
 	
+	@Operation(summary = "Get all chapters")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public List<Chapter> getAllChapters() throws GorgePasContentException{
 
@@ -47,7 +51,7 @@ public class ChapterController extends RestControllerBase
 		
 	}
 	
-	
+	@Operation(summary = "Get one chapter  by its chapter number")
 	@RequestMapping(path = "/{number}", method = RequestMethod.GET)
 	public Chapter getChapByNumber(@PathVariable("number") Integer number) throws GorgePasContentException
 	{
