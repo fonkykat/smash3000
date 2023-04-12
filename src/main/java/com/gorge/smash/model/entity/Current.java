@@ -15,6 +15,9 @@ public class Current
 
 	@Basic
 	private Integer number;
+	
+	@Basic
+	private Boolean next;
 
 	public Current()
 	{
@@ -44,5 +47,15 @@ public class Current
 	{
 		this.number = number;
 	}
+
+	public Boolean getNext() {
+		return next;
+	}
+
+	public void setNext(Boolean next) {
+		this.next = next;
+	}
+	
+	
 
 }

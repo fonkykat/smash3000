@@ -14,6 +14,8 @@ import com.gorge.smash.model.entity.Stats;
 import com.gorge.smash.rest.exception.GorgePasContentException;
 import com.gorge.smash.rest.repository.StatsRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/stats")
 public class StatsController extends RestControllerBase {
@@ -26,6 +28,7 @@ public class StatsController extends RestControllerBase {
 	@Autowired
 	StatsRepository statsRepo;
 
+	@Operation(summary = "Get all stats")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public List<Stats> getStats() throws GorgePasContentException {
 		return statsRepo.findAll();

@@ -24,6 +24,8 @@ import com.gorge.smash.model.entity.Concert;
 import com.gorge.smash.rest.exception.GorgePasContentException;
 import com.gorge.smash.rest.repository.ConcertRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/concert")
 public class ConcertController extends RestControllerBase {
@@ -53,18 +55,21 @@ public class ConcertController extends RestControllerBase {
 		}
 	}
 	
+	@Operation(summary = "Add a new Concert")
 	@RequestMapping(path = "", method = RequestMethod.POST)
 	public Concert addConcert(@RequestBody Concert concert) throws GorgePasContentException {
 	
 		return concertsRepo.save(concert);
 	}
 	
+	@Operation(summary = "Delete a Concert by Id")
 	@RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
 	public void deleteConcert(@PathVariable("id") Long id) throws GorgePasContentException {
 	
 		concertsRepo.deleteById(id);
 	}
 	
+	@Operation(summary = "Update a Concert by Id")
 	@RequestMapping(path = "/update/{id}", method = RequestMethod.PUT)
 	public Concert updateConcert(@PathVariable("id") Long id, @RequestBody Concert concert) throws GorgePasContentException {
 	
@@ -85,11 +90,13 @@ public class ConcertController extends RestControllerBase {
 		return concertsRepo.save(concertToUpdate);
 	}
 
+	@Operation(summary = "Get all concerts")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public List<Concert> getConcerts() throws GorgePasContentException {
 		return concertsRepo.findAll();
 	}
 	
+	@Operation(summary = "Get today's concert")
 	@RequestMapping(path = "/today", method = RequestMethod.GET)
 	public Concert getTodaysConcert() throws GorgePasContentException {
 	
@@ -97,6 +104,7 @@ public class ConcertController extends RestControllerBase {
 		return concertsRepo.findByDate(getTodayDate());
 	}
 	
+	@Operation(summary ="Register an IP in today's concert IP list, used to count eople in the audience")
 	@RequestMapping(path = "/hello", method = RequestMethod.GET)
 	public Concert addIp(HttpServletRequest request) throws GorgePasContentException {
 	
@@ -113,6 +121,7 @@ public class ConcertController extends RestControllerBase {
 		return concertsRepo.save(concert);
 	}
 	
+	@Operation(summary = "Return number of people playing the game in today's audience")
 	@RequestMapping(path = "/crowd", method = RequestMethod.GET)
 	public Integer getIpNumber() throws GorgePasContentException {
 

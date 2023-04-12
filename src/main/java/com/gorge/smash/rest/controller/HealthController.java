@@ -16,6 +16,7 @@ import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Bucket4j;
 import io.github.bucket4j.Refill;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/health")
@@ -32,6 +33,7 @@ public class HealthController
 		this.bucket = Bucket4j.builder().addLimit(limit).build();
 	}
 
+	@Operation(summary = "Tells if the  back end is running")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public ResponseEntity<String> healthCheck() throws GorgePasContentException
 	{

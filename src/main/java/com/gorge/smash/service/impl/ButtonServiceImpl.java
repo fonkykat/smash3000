@@ -59,7 +59,7 @@ public class ButtonServiceImpl implements ButtonService
 		if(crowdAverage == -1)
 			return new TempoError(lastAdmin.getTimestamp(), (double)-1, (double)-1);
 		
-		return new TempoError(lastAdmin.getTimestamp(), crowdAverage, lastAdmin.getTimestamp() - crowdAverage);
+		return new TempoError(lastAdmin.getTimestamp(), crowdAverage, crowdAverage - lastAdmin.getTimestamp());
 		}
 
 }

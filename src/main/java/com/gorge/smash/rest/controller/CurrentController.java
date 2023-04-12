@@ -20,6 +20,8 @@ import com.gorge.smash.rest.repository.CurrentRepository;
 import com.gorge.smash.rest.repository.StatsRepository;
 import com.gorge.smash.service.interf.StatsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/current")
 public class CurrentController extends RestControllerBase {
@@ -38,6 +40,7 @@ public class CurrentController extends RestControllerBase {
 	@Autowired
 	StatsService statsService;
 
+	@Operation(summary = "Set current chapter to {number}")
 	@RequestMapping(path = "/{number}", method = RequestMethod.PUT)
 	public Current setCurrent(@PathVariable("number") Integer number) throws GorgePasContentException {
 		List<Current> currents = currentRepo.findAll();
@@ -65,6 +68,7 @@ public class CurrentController extends RestControllerBase {
 		throw new GorgePasContentException(HttpStatus.CONFLICT, "Requested Chapter does not exist");
 	}
 
+	@Operation(summary = "Get current chapter number")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public Current getCurrent() throws GorgePasContentException {
 		return currentRepo.getById(0);
