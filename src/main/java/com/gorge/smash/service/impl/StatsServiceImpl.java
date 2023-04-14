@@ -43,17 +43,20 @@ public class StatsServiceImpl implements StatsService
 		
 		Stats stats = new Stats();
 		
-		stats.setChapter(chap);
-		for(Button b : buttons) {
-			switch(b.getName()) {
+		stats.setChapter_number(chapterNumber);
+		stats.setChapter_name(chap.getTitle());
+		for(Button button : buttons) {
+			switch(button.getName()) {
 			case "a":
-				stats.setA(b.getCount());
+				stats.setA(button.getCount());
 			case "b":
-				stats.setB(b.getCount());
+				stats.setB(button.getCount());
 			case "x":
-				stats.setX(b.getCount());
+				stats.setX(button.getCount());
 			case "y":
-				stats.setY(b.getCount());
+				stats.setY(button.getCount());
+			case "shake":
+				stats.setSHAKE(button.getCount());
 			}
 		}
 		

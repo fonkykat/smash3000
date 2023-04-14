@@ -22,9 +22,11 @@ public class Stats {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne
-	@JoinTable(name="chapter_stats")
-	private Chapter chapter;
+	@Basic
+	private String chapter_name;
+	
+	@Basic
+	private Integer chapter_number;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date savedOn;
@@ -41,6 +43,9 @@ public class Stats {
 	@Basic
 	private Integer Y;
 	
+	@Basic
+	private Integer SHAKE;
+	
 	
 	@PrePersist
 	  protected void onCreate() {
@@ -53,14 +58,17 @@ public class Stats {
 		super();
 	}
 	
-	
-	public Stats(Chapter chapter, Integer a, Integer b, Integer x, Integer y) {
+
+	public Stats(String chapter_name, Integer chapter_number, Integer a, Integer b, Integer x, Integer y,
+			Integer sHAKE) {
 		super();
-		this.chapter = chapter;
+		this.chapter_name = chapter_name;
+		this.chapter_number = chapter_number;
 		A = a;
 		B = b;
 		X = x;
 		Y = y;
+		SHAKE = sHAKE;
 	}
 
 
@@ -75,16 +83,6 @@ public class Stats {
 	}
 
 
-	public Chapter getChapter() {
-		return chapter;
-	}
-
-
-	public void setChapter(Chapter chapter) {
-		this.chapter = chapter;
-	}
-
-
 	public Date getSavedOn() {
 		return savedOn;
 	}
@@ -93,6 +91,31 @@ public class Stats {
 	public void setSavedOn(Date savedOn) {
 		this.savedOn = savedOn;
 	}
+	
+
+	public String getChapter_name() {
+		return chapter_name;
+	}
+
+
+
+	public void setChapter_name(String chapter_name) {
+		this.chapter_name = chapter_name;
+	}
+
+
+
+	public Integer getChapter_number() {
+		return chapter_number;
+	}
+
+
+
+	public void setChapter_number(Integer chapter_number) {
+		this.chapter_number = chapter_number;
+	}
+
+
 
 
 	public Integer getA() {
@@ -133,6 +156,19 @@ public class Stats {
 	public void setY(Integer y) {
 		Y = y;
 	}
+
+
+	public Integer getSHAKE() {
+		return SHAKE;
+	}
+
+
+
+	public void setSHAKE(Integer sHAKE) {
+		SHAKE = sHAKE;
+	}
+	
+	
 	
 	
 	
