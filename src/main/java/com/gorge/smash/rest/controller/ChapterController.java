@@ -43,6 +43,23 @@ public class ChapterController extends RestControllerBase
 		return chapterRepo.save(chapter);
 	}
 	
+	@Operation(summary = "Add a Chapter List")
+	@RequestMapping(path = "/list", method = RequestMethod.POST)
+	public List<Chapter> addChapterList(@RequestBody List<Chapter> chapters) throws GorgePasContentException
+	{
+		return chapterRepo.saveAll(chapters);
+	}
+	
+	@Operation(summary = "Delete All Chapters")
+	@RequestMapping(path = "/reset", method = RequestMethod.DELETE)
+	public void addChapterList() throws GorgePasContentException
+	{
+		chapterRepo.deleteAll();
+		
+		chapterRepo.save(new Chapter(0, null, null));
+	}
+	
+	
 	@Operation(summary = "Get all chapters")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public List<Chapter> getAllChapters() throws GorgePasContentException{

@@ -33,4 +33,10 @@ public class StatsController extends RestControllerBase {
 	public List<Stats> getStats() throws GorgePasContentException {
 		return statsRepo.findAll();
 	}
+	
+	@Operation(summary = "Delete all Stats")
+	@RequestMapping(path = "", method = RequestMethod.DELETE)
+	public void deleteStats() throws GorgePasContentException {
+		statsRepo.deleteAll();
+	}
 }

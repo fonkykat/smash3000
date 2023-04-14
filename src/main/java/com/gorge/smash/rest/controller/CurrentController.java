@@ -17,7 +17,6 @@ import com.gorge.smash.model.entity.Current;
 import com.gorge.smash.rest.exception.GorgePasContentException;
 import com.gorge.smash.rest.repository.ChapterRepository;
 import com.gorge.smash.rest.repository.CurrentRepository;
-import com.gorge.smash.rest.repository.StatsRepository;
 import com.gorge.smash.service.interf.StatsService;
 
 import io.swagger.v3.oas.annotations.Operation;
