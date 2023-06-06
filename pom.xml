@@ -5,6 +5,7 @@
 
 	<groupId>org.springframework</groupId>
 	<artifactId>smash3000</artifactId>
+	<version>1.0.0</version>
 
 	<build>
 	    <finalName>${project.artifactId}</finalName>
