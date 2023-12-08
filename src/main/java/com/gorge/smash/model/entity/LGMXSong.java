@@ -32,8 +32,6 @@ public class LGMXSong
 	@Basic
 	private String color2;
 	
-	@Basic
-	private String color3;
 	
 	@Basic
 	private Boolean synchro;
@@ -52,14 +50,13 @@ public class LGMXSong
 		this.title = title;
 	}
 
-	public LGMXSong(String title, Integer bpm, String color1, String color2, String color3, Boolean synchro,
+	public LGMXSong(String title, Integer bpm, String color1, String color2, Boolean synchro,
 			String notes) {
 		super();
 		this.title = title;
 		this.bpm = bpm;
 		this.color1 = color1;
 		this.color2 = color2;
-		this.color3 = color3;
 		this.synchro = synchro;
 		this.notes = notes;
 	}
@@ -94,14 +91,6 @@ public class LGMXSong
 
 	public void setColor2(String color2) {
 		this.color2 = color2;
-	}
-
-	public String getColor3() {
-		return color3;
-	}
-
-	public void setColor3(String color3) {
-		this.color3 = color3;
 	}
 
 	public Boolean getSynchro() {
