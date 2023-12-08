@@ -17,8 +17,6 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +59,39 @@ public class LGMXController extends RestControllerBase {
 			throw new GorgePasContentException(HttpStatus.CONFLICT, "This button already exists");
 		return LGMXRepo.save(song);
 	}
+	
+	@Operation(summary = "Add an LGMX Song in DB")
+	@RequestMapping(path = "/songs/edit/{id}", method = RequestMethod.PUT)
+	public LGMXSong editSong(@PathVariable("id") Integer id, @RequestBody LGMXSong edit_song) throws GorgePasContentException {
+
+		LGMXSong song = LGMXRepo.findById(id).orElse(null);
+		if(song == null)
+		{
+			throw new GorgePasContentException(HttpStatus.NOT_FOUND, "Ce morceau n'existe pas");
+		}
+		
+		if(edit_song.getTitle() != null)
+		{
+			song.setTitle(edit_song.getTitle());
+		}
+		
+		
+		if(edit_song.getBpm() != null)
+		{
+			song.setBpm(edit_song.getBpm());
+		}
+		
+		song.setColor1(edit_song.getColor1());
+		song.setColor2(edit_song.getColor2());
+		
+		song.setNotes(edit_song.getNotes());
+		song.setSynchro(edit_song.getSynchro());
+		
+		return LGMXRepo.save(song);
+	
+	
+	}
+
 
 	@Operation(summary = "Add an LGMX Song in DB")
 	@RequestMapping(path = "/songs/add/all", method = RequestMethod.POST)
@@ -89,13 +120,13 @@ public class LGMXController extends RestControllerBase {
 
 	@Operation(summary = "Get an LGMX Songs by id")
 	@RequestMapping(path = "/songs/{id}", method = RequestMethod.GET)
-	public LGMXSong getLGMXSongById(@PathVariable("id") Long id) throws GorgePasContentException {
+	public LGMXSong getLGMXSongById(@PathVariable("id") Integer id) throws GorgePasContentException {
 		return LGMXRepo.findById(id).orElse(null);
 	}
 
 	@Operation(summary = "Get all LGMX Songs")
 	@RequestMapping(path = "/songs/{id}", method = RequestMethod.DELETE)
-	public void deleteLGMXSong(@PathVariable("id") Long id) throws GorgePasContentException {
+	public void deleteLGMXSong(@PathVariable("id") Integer id) throws GorgePasContentException {
 		LGMXRepo.deleteById(id);
 	}
 

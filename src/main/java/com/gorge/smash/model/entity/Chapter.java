@@ -1,13 +1,15 @@
 package com.gorge.smash.model.entity;
 
-import javax.persistence.Basic;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.gorge.smash.util.Gamepad;
 
 @Entity
 @Table(name = "chapter")
@@ -16,30 +18,33 @@ public class Chapter
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
-	@Basic
-	private Integer number;
 	
-	@Basic
-	private String title;
+	@ManyToMany
+	List<Stage> stages = new ArrayList<Stage>();
 	
-	@Basic
-	private Gamepad type;
-	
+	@ManyToOne
+	Song song;
 
 	public Chapter()
 	{
 	}
 	
-
-	public Chapter(Integer number, String title, Gamepad type) {
+	
+	public Chapter(Song song) {
 		super();
-		this.number = number;
-		this.title = title;
-		this.type = type;
+		this.song = song;
 	}
 
+	public Chapter(List<Stage> stages) {
+		super();
+		this.stages = stages;
+	}
 
+	public Chapter(Stage stage){
+		super();
+		this.stages = new ArrayList<Stage>();
+		this.stages.add(stage);
+	}
 
 	public Integer getId()
 	{
@@ -51,35 +56,26 @@ public class Chapter
 		this.id = id;
 	}
 
-	public Integer getNumber()
-	{
-		return number;
-	}
-
-	public void setNumber(Integer number)
-	{
-		this.number = number;
+	
+	public List<Stage> getStages() {
+		return stages;
 	}
 
 
-	public String getTitle() {
-		return title;
+	public void setStages(List<Stage> stages) {
+		this.stages = stages;
 	}
 
 
-	public void setTitle(String title) {
-		this.title = title;
+	public Song getSong() {
+		return song;
 	}
 
 
-	public Gamepad getType() {
-		return type;
+	public void setSong(Song song) {
+		this.song = song;
 	}
-
-
-	public void setType(Gamepad type) {
-		this.type = type;
-	}
+	
 	
 	
 

@@ -70,6 +70,28 @@ public class ButtonController extends RestControllerBase
 	{
 		return buttonRepo.findAll();
 	}
+	
+	@Operation(summary = "Unlock for Admin")
+	@RequestMapping(path = "/unlock/admin/{pass}", method = RequestMethod.GET)
+	public Boolean unlockAdmin(@PathVariable("pass") String pass) throws GorgePasContentException
+	{
+		if(pass.length() != 8)
+		{
+			return false;
+		}
+		return buttonRepo.findByName(pass) != null;
+	}
+	
+	@Operation(summary = "Unlock for LGMX")
+	@RequestMapping(path = "/unlock/lgmx/{pass}", method = RequestMethod.GET)
+	public Boolean unlockLGMX(@PathVariable("pass") String pass) throws GorgePasContentException
+	{
+		if(pass.length() != 6)
+		{
+			return false;
+		}
+		return buttonRepo.findByName(pass) != null;
+	}
 
 	@Operation(summary = "Reset all buttons counts")
 	@RequestMapping(path = "", method = RequestMethod.DELETE)

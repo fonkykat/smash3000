@@ -7,7 +7,7 @@ import com.gorge.smash.model.entity.Chapter;
 import com.gorge.smash.model.entity.LGMXSong;
 
 @RepositoryRestResource(collectionResourceRel = "lgmxsong", path = "lgmxsong")
-public interface LGMXSongRepository extends JpaRepository<LGMXSong, Long>
+public interface LGMXSongRepository extends JpaRepository<LGMXSong, Integer>
 {
 	public LGMXSong findByTitle(String title);
 	

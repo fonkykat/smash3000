@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.gorge.smash.model.entity.Button;
-import com.gorge.smash.model.entity.Chapter;
+import com.gorge.smash.model.entity.Stage;
 import com.gorge.smash.model.entity.Stats;
 import com.gorge.smash.rest.exception.GorgePasContentException;
-import com.gorge.smash.rest.repository.ChapterRepository;
+import com.gorge.smash.rest.repository.StageRepository;
 import com.gorge.smash.rest.repository.StatsRepository;
 import com.gorge.smash.service.interf.ButtonService;
 import com.gorge.smash.service.interf.StatsService;
@@ -29,12 +29,12 @@ public class StatsServiceImpl implements StatsService
 	StatsRepository statsRepo;
 	
 	@Autowired
-	ChapterRepository chapterRepo;
+	StageRepository stageRepo;
 
 	@Override
 	public void saveStats(Integer chapterNumber) throws GorgePasContentException
 	{
-		Chapter chap = chapterRepo.findByNumber(chapterNumber);
+		Stage chap = stageRepo.findByNumber(chapterNumber);
 		
 		if(chap == null)
 			throw new GorgePasContentException(HttpStatus.INTERNAL_SERVER_ERROR, "Previous CHapter does'nt exist");
@@ -44,7 +44,6 @@ public class StatsServiceImpl implements StatsService
 		Stats stats = new Stats();
 		
 		stats.setChapter_number(chapterNumber);
-		stats.setChapter_name(chap.getTitle());
 		for(Button button : buttons) {
 			switch(button.getName()) {
 			case "a":

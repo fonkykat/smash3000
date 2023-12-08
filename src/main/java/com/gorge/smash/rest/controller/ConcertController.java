@@ -104,7 +104,7 @@ public class ConcertController extends RestControllerBase {
 		return concertsRepo.findByDate(getTodayDate());
 	}
 	
-	@Operation(summary ="Register an IP in today's concert IP list, used to count eople in the audience")
+	@Operation(summary ="Register an IP in today's concert IP list, used to count people in the audience")
 	@RequestMapping(path = "/hello", method = RequestMethod.GET)
 	public Concert addIp(HttpServletRequest request) throws GorgePasContentException {
 	

@@ -1,11 +1,19 @@
 package com.gorge.smash.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "song")
 public class Song {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +27,10 @@ public class Song {
 	
 	@Basic
 	private Float zgg;
-		
+	
+	@ManyToMany
+	private List<Stage> stages = new ArrayList<Stage>();
+	
 	
 
 	public String getTitle() {
@@ -46,8 +57,5 @@ public class Song {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	
-	
 
 }

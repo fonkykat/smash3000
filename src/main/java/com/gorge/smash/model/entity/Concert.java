@@ -1,7 +1,9 @@
 package com.gorge.smash.model.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -10,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,7 +25,7 @@ public class Concert
 	@Basic
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 
 	@ElementCollection
 	private Set<String> ips = new HashSet<String>();
@@ -36,10 +39,16 @@ public class Concert
 	@Basic
 	private String name;
 	
+	@ManyToMany
+	List<Chapter> events = new ArrayList<Chapter>();
+	
+	@ManyToMany
+	List<Song> setlist = new ArrayList<Song>();
 
 	public Concert()
 	{
 		super();
+		this.setlist = new ArrayList<>();
 	}
 	
 	@PrePersist
@@ -47,11 +56,11 @@ public class Concert
 		date = new Date();
 	  }
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -87,6 +96,20 @@ public class Concert
 		this.name = name;
 	}
 
-	
+	public List<Chapter> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Chapter> events) {
+		this.events = events;
+	}
+
+	public List<Song> getSetlist() {
+		return setlist;
+	}
+
+	public void setSetlist(List<Song> setlist) {
+		this.setlist = setlist;
+	}	
 	
 }

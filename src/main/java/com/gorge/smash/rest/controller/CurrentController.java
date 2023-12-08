@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gorge.smash.model.entity.Current;
 import com.gorge.smash.rest.exception.GorgePasContentException;
-import com.gorge.smash.rest.repository.ChapterRepository;
 import com.gorge.smash.rest.repository.CurrentRepository;
+import com.gorge.smash.rest.repository.StageRepository;
 import com.gorge.smash.service.interf.StatsService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,12 +34,12 @@ public class CurrentController extends RestControllerBase {
 	CurrentRepository currentRepo;
 
 	@Autowired
-	ChapterRepository chapterRepo;
+	StageRepository stageRepo;
 
 	@Autowired
 	StatsService statsService;
 
-	@Operation(summary = "Set current chapter to {number}")
+	@Operation(summary = "Set current stage to {number}")
 	@RequestMapping(path = "/{number}", method = RequestMethod.PUT)
 	public Current setCurrent(@PathVariable("number") Integer number) throws GorgePasContentException {
 		List<Current> currents = currentRepo.findAll();
@@ -59,7 +59,7 @@ public class CurrentController extends RestControllerBase {
 		if (previous > 0)
 			statsService.saveStats(previous);
 
-		if (chapterRepo.existsByNumber(number)) {
+		if (stageRepo.existsByNumber(number)) {
 			current.setNumber(number);
 			return currentRepo.save(current);
 		}
@@ -76,7 +76,7 @@ public class CurrentController extends RestControllerBase {
 		return currentRepo.save(current);
 	}
 	
-	@Operation(summary = "Get current chapter number")
+	@Operation(summary = "Get current stage number")
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public Current getCurrent() throws GorgePasContentException {
 		return currentRepo.getById(0);
